@@ -62,5 +62,9 @@
     "due-date",
     "dashboard",
     "中文"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitcode.com/Holibut/dsh-plugin-project-monitor.git"
+  }
 }
