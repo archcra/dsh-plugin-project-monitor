@@ -262,16 +262,11 @@ node scripts/vendor.mjs          # 补齐宿主半侧运行时依赖（幂等）
 node scripts/install.mjs         # 安装预检
 ```
 
-## 两个实现要点
+## 实现要点
 
-**① 引擎零第三方依赖。** 自研 ZIP（stored + deflate，CRC-32 自算）与最小 OOXML
+**引擎零第三方依赖。** 自研 ZIP（stored + deflate，CRC-32 自算）与最小 OOXML
 读写器（共享字符串、内联字符串、按数字格式识别日期、多表、四种样式表）只依赖
 Node 内置 `zlib`，因此插件在 DSH 运行时、系统 node、Electron 里行为一致。
 宿主半侧唯一的外部依赖是 DSH 自己的 `@deepseek-ai/schemastery`，由
 `scripts/vendor.mjs` 从 app.asar 本地化进插件的 `node_modules/`（168 KB），
 profile 不必为它装任何东西。
-
-**② 本环境的 ESM 解析器对「上越包边界」的相对说明符会丢一段路径。**
-从 `plugin/` 里写 `../lib/x.mjs` 会落到 `ppm2/lib/x.mjs`（少一段），而同级
-`./x.mjs` 始终精确。因此实现必须与它依赖的引擎同目录（`lib/cli.mjs`），
-`scripts/project-monitor.mjs` 只做一层包装，测试统一用绝对 `file://` URL 导入。
