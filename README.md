@@ -257,7 +257,7 @@ plugin/
 
 ```bash
 cd plugin
-node --test test/*.test.mjs      # 84 项：存储/解析/迁移/读模型/导出/宿主路由/CLI
+node --test test/*.test.mjs      # 91 项：存储/解析/迁移/读模型/导出/宿主路由/CLI
 node scripts/vendor.mjs          # 补齐宿主半侧运行时依赖（幂等）
 node scripts/install.mjs         # 安装预检
 ```
@@ -275,9 +275,3 @@ profile 不必为它装任何东西。
 从 `plugin/` 里写 `../lib/x.mjs` 会落到 `ppm2/lib/x.mjs`（少一段），而同级
 `./x.mjs` 始终精确。因此实现必须与它依赖的引擎同目录（`lib/cli.mjs`），
 `scripts/project-monitor.mjs` 只做一层包装，测试统一用绝对 `file://` URL 导入。
-
-## 与 `project-monitor` skill 的关系
-
-旧的 `~/.agents/skills/project-monitor`（`build_dashboard.py`）以 Excel 为输入，
-本插件以自身存储为输入、Excel 为输出。两者分级规则与看板布局一致，可以并存：
-skill 适合"已有表格、只做看板"，插件适合"不想碰表格、要能录入"。
