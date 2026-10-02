@@ -49,7 +49,11 @@ Excel 只在两种情况下出现——附近碰巧有旧 `project-tracker.xlsx`
   - 国内：`https://gitcode.com/Holibut/dsh-plugin-project-monitor`
   - 国际：`https://github.com/archcra/dsh-plugin-project-monitor`
   - 或 npm 包名（如已发布）
-- **CLI**（需先完全退出桌面端）：
+- **CLI（Web 版，最常见）**：
+  ```bash
+  dsh plugin --profile web add https://github.com/archcra/dsh-plugin-project-monitor
+  ```
+- **CLI（桌面版，需先完全退出桌面端）**：
   ```bash
   /Applications/DeepSeek\ Harness.app/Contents/Resources/runtime/cli/bin/dsh plugin --profile desktop add <仓库地址或包名>
   ```
