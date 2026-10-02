@@ -371,7 +371,7 @@ window.__ModuleLoader__.load({
                   children: [
                     jsx('textarea', {
                       className: 'pm-textarea',
-                      placeholder: '每行一条，例如：\n甲项目,写总结,2026-10-10\n乙项目,验收,下个月初',
+                      placeholder: '每行一条，例如：\n甲项目,写总结,2026-10-10\n乙项目,验收,下周五',
                       value: text,
                       onChange: (e) => { setText(e.target.value); setPreview(null); },
                     }),
