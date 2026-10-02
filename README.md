@@ -43,10 +43,12 @@
 Excel 只在两种情况下出现——附近碰巧有旧 `project-tracker.xlsx` 时自动迁移一次，
 以及你主动点「导出 Excel」时生成投影文件。
 
-### 方式一：从 GitCode / npm 安装（推荐给其他用户）
+### 方式一：从 GitCode / GitHub / npm 安装（推荐给其他用户）
 
-- **GUI**：侧栏 **插件 → 添加插件** → 粘贴仓库地址（如 `https://gitcode.com/Holibut/dsh-plugin-project-monitor`）
-  或 npm 包名 → 安装 → 立即启用（任意可访问的 git 地址均可，安装器底层是 pnpm）
+- **GUI**：侧栏 **插件 → 添加插件** → 粘贴仓库地址 → 安装 → 立即启用（任意可访问的 git 地址均可，安装器底层是 pnpm）
+  - 国内：`https://gitcode.com/Holibut/dsh-plugin-project-monitor`
+  - 国际：`https://github.com/archcra/dsh-plugin-project-monitor`
+  - 或 npm 包名（如已发布）
 - **CLI**（需先完全退出桌面端）：
   ```bash
   /Applications/DeepSeek\ Harness.app/Contents/Resources/runtime/cli/bin/dsh plugin --profile desktop add <仓库地址或包名>
@@ -73,11 +75,13 @@ node plugin/scripts/install.mjs      # 预检并打印与你机器匹配的安�
 ### 发布指引（维护者）
 
 1. `cd plugin && git init && git add -A && git commit -m "project-monitor v1.0.0"`（`.gitignore` 已排除 `node_modules/`）
-2. 在 GitCode 建仓库（`https://gitcode.com/Holibut/dsh-plugin-project-monitor`）并 push；用户即可用**方式一**安装
+2. 双仓发布：GitCode（国内主）+ GitHub（国际镜像），两边各建一个**公开空仓库**（不勾选任何初始化项），然后：
    ```bash
-   git remote add origin https://gitcode.com/Holibut/dsh-plugin-project-monitor.git
-   git push -u origin main
+   git remote add gitcode https://gitcode.com/Holibut/dsh-plugin-project-monitor.git
+   git remote add github https://github.com/archcra/dsh-plugin-project-monitor.git
+   git push -u gitcode main && git push -u github main
    ```
+   日常发版：`git push gitcode main && git push github main`
 3. 若要发 npm：先在 `package.json` 补 `repository` 字段，然后 `npm publish`
    （`private` 已移除，`files` 白名单只发布清单内文件）
 4. 面板端数据与配置都在 `$DSH_HOME/project-monitor/`，与仓库无关，升级插件不丢数据

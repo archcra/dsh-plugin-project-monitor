@@ -65,6 +65,6 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://gitcode.com/Holibut/dsh-plugin-project-monitor.git"
+    "url": "git+https://github.com/archcra/dsh-plugin-project-monitor.git"
   }
 }
