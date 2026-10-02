@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  project-monitor —— 每天早晨 08:00 生成事项进展摘要（macOS launchd）。
+
+  安装（把 __PLUGIN_DIR__ 换成插件的绝对路径）：
+      sed "s|__PLUGIN_DIR__|$PWD/plugin|g" plugin/scheduling/com.project-monitor.daily.plist \
+        > ~/Library/LaunchAgents/com.project-monitor.daily.plist
+      launchctl unload ~/Library/LaunchAgents/com.project-monitor.daily.plist 2>/dev/null || true
+      launchctl load  ~/Library/LaunchAgents/com.project-monitor.daily.plist
+
+  测试（立刻跑一次，忽略时间表）：
+      launchctl start com.project-monitor.daily
+
+  查看结果：
+      tail -n 40 <日志路径见下方 StandardOutPath>
+
+  卸载：
+      launchctl unload ~/Library/LaunchAgents/com.project-monitor.daily.plist
+      rm ~/Library/LaunchAgents/com.project-monitor.daily.plist
+
+  说明：
+  - StartCalendarInterval 的 Hour=8 / Minute=0 表示每天 08:00 本地时间；
+    Mac 在 08:00 处于睡眠时，launchd 会在唤醒后补跑一次。
+  - 生成物：<仓库>/project-tracker-dashboard.xlsx 与 <仓库>/daily-summaries/<日期>.md。
+  - 若更希望摘要作为一条消息进入 DSH 会话，改用 DSH 官方 Schedule 实验包
+    （见 plugin/README.md「每天早晨的摘要」一节）。
+-->
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+  <dict>
+    <key>Label</key>
+    <string>com.project-monitor.daily</string>
+
+    <key>ProgramArguments</key>
+    <array>
+      <string>/bin/sh</string>
+      <string>__PLUGIN_DIR__/scheduling/run-daily-summary.sh</string>
+    </array>
+
+    <key>EnvironmentVariables</key>
+    <dict>
+      <key>PM_NODE</key>
+      <string>/Applications/DeepSeek Harness.app/Contents/Resources/runtime/primary-runtime/node/bin/node</string>
+    </dict>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+      <key>Hour</key>
+      <integer>8</integer>
+      <key>Minute</key>
+      <integer>0</integer>
+    </dict>
+
+    <key>RunAtLoad</key>
+    <false/>
+
+    <key>WorkingDirectory</key>
+    <string>__PLUGIN_DIR__</string>
+
+    <key>StandardOutPath</key>
+    <string>__PLUGIN_DIR__/scheduling/daily-summary.log</string>
+    <key>StandardErrorPath</key>
+    <string>__PLUGIN_DIR__/scheduling/daily-summary.err.log</string>
+  </dict>
+</plist>

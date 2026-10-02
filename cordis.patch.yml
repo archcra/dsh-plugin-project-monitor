@@ -1,0 +1,21 @@
+# project-monitor 组合包 patch
+#
+# 插入宿主半侧的一行 Loader。浏览器半侧由 `dsh.client` 声明自动提供：宿主扫描
+# 已启用的 Loader 行，把 client.js 作为插件 bundle 挂到 /plugins。
+#
+# 若未通过 pnpm 安装到 profile，可把 name 换成 file: 绝对路径，例如：
+#     name: 'file:///Users/you/.../ppm2/plugin'
+#
+# config 会原样传给 index.js 的 apply(ctx, config)；省略即全部使用默认值
+# （数据目录 $DSH_HOME/project-monitor，导出 <数据目录>/dashboard.xlsx）。
+- insert:
+    - id: project-monitor
+      name: 'project-monitor'
+      config:
+        # dataDir: ''                    # 留空 = $DSH_HOME/project-monitor
+        # exportWorkbook: ''             # 留空 = <dataDir>/dashboard.xlsx
+        # summaryDir: daily-summaries    # 相对导出目录
+        # legacyWorkbook: ''             # 首次迁移来源；留空 = 自动探测 project-tracker.xlsx
+        # writeFiles: true               # false = 只读，不写任何导出文件
+        # cacheTtlMs: 2000
+        # todayOverride: ''              # 固定基准日期，便于复现

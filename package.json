@@ -1,0 +1,66 @@
+{
+  "name": "project-monitor",
+  "version": "1.0.0",
+  "description": "DSH 事项进展面板：插件自管数据（tasks.json 原子写 + 每日备份），红橙黄绿分级预警、快捷录入、批量粘贴、每日摘要，Excel 仅作可选导出。全新安装零配置，无需任何本地 Excel。",
+  "type": "module",
+  "license": "MIT",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./lib/*": "./lib/*",
+    "./package.json": "./package.json"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-sidebar"
+      ],
+      "platform": "web"
+    }
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/schemastery": "~3.18.4",
+    "@deepseek-ai/dsh-client-locale": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-layout": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-client-ui-sidebar": "0.2.0-rc.2",
+    "@deepseek-ai/dsh-host-webserver": "0.2.0-rc.2"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.mjs",
+    "dashboard": "node lib/cli.mjs",
+    "check": "node lib/cli.mjs check",
+    "summary": "node lib/cli.mjs summary"
+  },
+  "files": [
+    "LICENSE",
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "lib/",
+    "scripts/",
+    "scheduling/",
+    "test/",
+    "README.md"
+  ],
+  "bin": {
+    "project-monitor": "./lib/cli.mjs"
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "project-monitor",
+    "due-date",
+    "dashboard",
+    "中文"
+  ]
+}
